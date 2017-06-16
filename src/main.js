@@ -7,53 +7,43 @@ requirejs.config({
   }
 })
 
-require(['lib/pixi.min', 'map', 'stage', 'player', 'inventory'],
-        ( PIXI,           Map,   Stage,   Player,   Inventory ) => {
+require(['lib/pixi.min', 'assets'],
+        ( PIXI,           Assets ) => {
+  Assets.load(() => {
+    require(['map', 'stage', 'player', 'inventory'],
+            ( Map,   Stage,   Player,   Inventory ) => {
+      const { Application, Container, Sprite, loader } = PIXI
+      const { resources } = loader
+      const app = initRenderer()
 
-  const { Container, Sprite, loader } = PIXI
-  const { resources } = loader
-  const { stage, renderer } = init()
+      setup()
 
-  loader
-    .add([
-      'img/placeholder-1.png',
-      'img/placeholder-2.png',
-      'img/placeholder-3.png',
-      'img/placeholder-4.png'
-    ])
-    .on('progress', loadProgressHandler)
-    .load(setup)
+      function initRenderer() {
+        const app = new Application(256, 256, { backgroundColor: 0x00deff })
+        app.view.style.position = 'absolute'
+        app.view.style.display = 'block'
+        app.autoresize = true
+        app.renderer.resize(window.innerWidth, window.innerHeight)
 
-  function setup() {
-    console.log('All files loaded')
+        document.body.appendChild(app.view)
 
-    const sprites = [1,2,3,4]
-      .map(i => `img/placeholder-${i}.png`)
-      .map(name => loader.resources[name].texture)
-      .map(texture => new Sprite(texture))
+        return app
+      }
 
-    sprites.forEach(sprite => {
-      stage.addChild(sprite)
+      function setup() {
+        const sprites = [1,2,3,4]
+          .map(i => `placeholder-${i}`)
+          .map(name => loader.resources[name].texture)
+          .map(texture => new Sprite(texture))
+
+        const stage = new Container()
+        sprites.forEach(sprite => {
+          stage.addChild(sprite)
+        })
+
+        app.stage.addChild(stage)
+        stage.alpha = 0.5
+      }
     })
-
-    renderer.render(stage)
-  }
-
-  function init() {
-    const stage = new Container()
-    const renderer = PIXI.autoDetectRenderer(256, 256)
-    renderer.view.style.position = 'absolute'
-    renderer.view.style.display = 'block'
-    renderer.autoresize = true
-    renderer.resize(window.innerWidth, window.innerHeight)
-
-    document.body.appendChild(renderer.view)
-
-    return { stage, renderer }
-  }
-
-  function loadProgressHandler(loader, resource) {
-    console.log(`loading ${resource.url}`)
-    console.log(`progress: ${loader.progress}%`)
-  }
+  })
 })
