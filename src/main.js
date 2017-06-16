@@ -15,11 +15,26 @@ require(['lib/pixi.min', 'test'], (PIXI, test) => {
   const { stage, renderer } = init()
 
   loader
+    .add([
+      'img/placeholder-1.png',
+      'img/placeholder-2.png',
+      'img/placeholder-3.png',
+      'img/placeholder-4.png'
+    ])
     .on('progress', loadProgressHandler)
     .load(setup)
 
   function setup() {
     console.log('All files loaded')
+
+    const sprites = [1,2,3,4]
+      .map(i => `img/placeholder-${i}.png`)
+      .map(name => loader.resources[name].texture)
+      .map(texture => new Sprite(texture))
+
+    sprites.forEach(sprite => {
+      stage.addChild(sprite)
+    })
 
     renderer.render(stage)
   }
