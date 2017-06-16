@@ -7,8 +7,8 @@ requirejs.config({
   }
 })
 
-require(['lib/pixi.min', 'test'], (PIXI, test) => {
-  console.log(test.string)
+require(['lib/pixi.min', 'map', 'stage', 'player', 'inventory'],
+        ( PIXI,           Map,   Stage,   Player,   Inventory ) => {
 
   const { Container, Sprite, loader } = PIXI
   const { resources } = loader
