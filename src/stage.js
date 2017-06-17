@@ -10,30 +10,64 @@ define(['character', 'util'],
       this.stages = { }
     }
 
+    transitionTo(newStage) {
+      this.visible = false
+      newStage.beforeShow(this)
+      newStage.visible = true
+    }
+
     beforeShow(previousStage) { }
   }
 
   class HeadStage extends Stage {
     constructor(character) {
       super('background-head', character)
-
-      const head = new Character({
-        speaking: util.createAnimation(PIXI.loader.resources['hellmouth-talk-cycle'], 1 / 4)
-      }, 135, 80)
-      head.animations.speaking.loop = false
-      this.addChild(head)
+      const self = this
 
       const sounds = util.range(1, 39).map(i => {
         const res = PIXI.loader.resources[`hellmouth-${util.intToString(i, 3)}`]
         return res.sound
       })
-      util.playRandomSound(sounds, -1, () => { head.animations.speaking.gotoAndPlay(0) })
+
+      const head = new Character({
+        speaking: util.createAnimation(PIXI.loader.resources['hellmouth-talk-cycle'], 1 / 4)
+      }, 135, 80, {
+        muted: function() {
+          this.animations.speaking.loop = true
+          this.activeAnimation = this.animations.speaking
+          this.activeAnimation.gotoAndPlay(0)
+        },
+        speaking: function() {
+          this.animations.speaking.loop = false
+          this.activeAnimation = this.animations.speaking
+          this.activeAnimation.gotoAndPlay(0)
+          util.playRandomSound(
+            sounds,
+            () => self.visible && this.state == 'speaking',
+            () => { head.animations.speaking.gotoAndPlay(0) }
+          )
+        }
+      }, 'muted')
+
+      head.clickable = true
+      head.on('pointerdown', () => {
+        head.state = head.state == 'muted' ? 'speaking' : 'muted'
+      })
+
+      this.addChild(head)
+    }
+
+    beforeShow(previousStage) {
     }
   }
 
   class BardStage extends Stage {
     constructor(character) {
       super('background-bard', character)
+    }
+
+    beforeShow(previousStage) {
+
     }
   }
 

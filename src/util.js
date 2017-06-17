@@ -24,11 +24,11 @@ const utils = {
     return animation
   },
   playRandomSound(sounds, count, soundPlayed, playbackDone, lastSound) {
-    if (count == 0) return playbackDone()
+    if (count == 0) return playbackDone && playbackDone()
     let nextCount
     if (!Number.isInteger(count)) {
       if (!count()) {
-        return playbackDone()
+        return playbackDone && playbackDone()
       }
       nextCount = count
     } else {

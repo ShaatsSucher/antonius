@@ -2,12 +2,22 @@
 
 define(() => {
   class Character extends PIXI.Container {
-    constructor(animations, posX, posY) {
+    constructor(animations, posX, posY, states, defaultState) {
       super()
       this.x = posX
       this.y = posY
       this.pivot = new PIXI.Point(16, 32)
       this.animations = animations
+
+      this.states = {}
+      Object.keys(animations).forEach(name => {
+        this.states[name] = function() {
+          this.activeAnimation = this.animations[name]
+        }
+      })
+      Object.keys(states || {}).forEach(name => {
+        this.states[name] = states[name]
+      })
 
       for (let key of Object.keys(this.animations)) {
         const animation = this.animations[key]
@@ -15,7 +25,11 @@ define(() => {
         animation.visible = false
       }
 
-      this.state = Object.keys(animations)[0]
+      this.state = defaultState || Object.keys(this.states)[0]
+      if (!this.activeAnimation) {
+        this.activeAnimation = this.animations[Object.keys(this.animations)[0]]
+      }
+      console.dir(this.activeAnimation)
       this.width = this.activeAnimation.width
       this.height = this.activeAnimation.height
     }
@@ -36,7 +50,9 @@ define(() => {
 
     set state(newState) {
       this._state = newState
-      this.activeAnimation = this.animations[newState]
+      if (this.states[newState]) {
+        this.states[newState].call(this)
+      }
     }
 
     get state() {
