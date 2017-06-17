@@ -49,6 +49,7 @@ require(['assets'],
         })
         antonius.on('pointerdown', () => {
           util.playRandomSound(sounds, 5)
+          antonius.say("Quack!")
         })
 
         const stages = {

@@ -18,6 +18,15 @@ define(() => {
       this.state = Object.keys(animations)[0]
       this.width = this.activeAnimation.width
       this.height = this.activeAnimation.height
+
+      this.text = new PIXI.Text("ihre Werbung hier!", {
+          fontFamily: 'Arial',
+          fontSize: 12,
+          fill: 'white',
+          align: 'left'
+      });
+      this.text.visible = false
+      this.addChild(this.text)
     }
 
     get activeAnimation() {
@@ -44,11 +53,11 @@ define(() => {
     }
 
     faceLeft() {
-      this.scale = new PIXI.Point(Math.abs(this.scale.x), this.scale.y)
+      this.activeAnimation.scale = new PIXI.Point(Math.abs(this.activeAnimation.scale.x), this.activeAnimation.scale.y)
     }
 
     faceRight() {
-      this.scale = new PIXI.Point(-Math.abs(this.scale.x), this.scale.y)
+      this.activeAnimation.scale = new PIXI.Point(-Math.abs(this.activeAnimation.scale.x), this.activeAnimation.scale.y)
     }
 
     get clickable() {
@@ -93,7 +102,26 @@ define(() => {
       PIXI.ticker.shared.add(tickerListener)
     }
 
-    say(string) {
+    say(string, done) {
+      // create some white text using the Snippet webfont
+      this.text.setText(string)
+      this.text.visible = true
+
+      let time = 0
+      let ttl = 100
+
+      PIXI.ticker.shared.remove(tickerListener)
+
+      self = this
+      function tickerListener(deltaT) {
+        time += deltaT
+        if (time >= ttl) {
+          self.text.visible = false
+          PIXI.ticker.shared.remove(tickerListener)
+          return done && done()
+        }
+      }
+      PIXI.ticker.shared.add(tickerListener)
 
     }
   }
