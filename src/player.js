@@ -1,7 +1,7 @@
 'use strict'
 
-define(['lib/pixi.min', 'inventory', 'sound'],
-       ( PIXI,           Inventory,   Sound ) => {
+define(['inventory', 'sound'],
+       ( Inventory,   Sound ) => {
 
   // class Player {
   //   constructor(sprites, posx, posy) {
@@ -25,5 +25,5 @@ define(['lib/pixi.min', 'inventory', 'sound'],
   //   }
   // }
 
-  
+
 })

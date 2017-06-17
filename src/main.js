@@ -7,13 +7,16 @@ requirejs.config({
   }
 })
 
-require(['lib/pixi.min', 'assets'],
-        ( PIXI,           Assets ) => {
+// Workarunod for PIXI not being correctly defined inside the Assets.load callback
+const pixi = PIXI
+
+require(['assets'],
+        ( Assets ) => {
   PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST
   Assets.load(() => {
     require(['map', 'stage', 'player', 'inventory'],
             ( Map,   Stage,   Player,   Inventory ) => {
-      const { Application, Container, Sprite, loader } = PIXI
+      const { Application, Container, Sprite, loader, sound } = pixi
       const { resources } = loader
       const app = initRenderer()
 
@@ -32,11 +35,18 @@ require(['lib/pixi.min', 'assets'],
       }
 
       function setup() {
-        const frames = [1,2,3,4]
-          .map(i => `placeholder-${i}`)
-          .map(name => loader.resources[name].texture)
-
         const stage = new Container()
+
+        const sounds = [1,2,3,4,5].map(i => loader.resources[`gans-00${i}`].sound)
+        function playRandomSound (count) {
+          return () => {
+            if (count <= 0) return
+            const random = Math.floor(Math.random() * 5)
+            const nextSound = sounds[random]
+            nextSound.play(playRandomSound(count - 1))
+          }
+        }
+        playRandomSound(10)()
 
         let anim = loader.resources['walk-cycle']
         anim.animationSpeed = 1 / 8
