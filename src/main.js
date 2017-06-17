@@ -14,8 +14,8 @@ require(['assets'],
         ( Assets ) => {
   PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST
   Assets.load(() => {
-    require(['map', 'stage', 'player', 'inventory', 'util'],
-            ( Map,   Stage,   Player,   Inventory,   util ) => {
+    require(['map', 'stage', 'character', 'inventory', 'util'],
+            ( Map,   Stage,   Character,   Inventory,   util ) => {
       const { Application, Container, Sprite, loader, sound } = pixi
       const { resources } = loader
       const app = initRenderer()
@@ -52,42 +52,23 @@ require(['assets'],
           }
         }
 
-        let anim = loader.resources['walk-cycle']
-        anim.animationSpeed = 1 / 8
-        anim.play()
-        anim.interactive = true
-        anim.buttonMode = true
-        anim.on('pointerdown', () => {
+        let antonius = new Character({
+          walking: util.createAnimation(loader.resources['walk-cycle'], 1 / 8)
+        }, 100, 100)
+        antonius.clickable = true
+        antonius.on('pointerdown', () => {
           playRandomSound(5)()
         })
-
-        function moveTo(x, y, t, done) {
-          let time = 0
-          const initialX = anim.x
-          const initialY = anim.y
-          function tickerListener(deltaT) {
-            time += deltaT
-            let percent = time / t
-            if (percent > 1) {
-              anim.x = x
-              anim.y = y
-              app.ticker.remove(tickerListener)
-              return done && done()
-            }
-            anim.x = initialX + (x - initialX) * percent
-            anim.y = initialY + (y - initialY) * percent
-          }
-          app.ticker.add(tickerListener)
-        }
+        stage.addChild(antonius)
 
         function moveToRandomLocation() {
-          const rx = Math.floor(Math.random() * (app.renderer.width - anim.width))
-          const ry = Math.floor(Math.random() * (app.renderer.height - anim.height))
-          moveTo(rx, ry, 200, moveToRandomLocation)
+          const rx = Math.floor(32 / 2 + Math.random() * (app.renderer.width - 32 / 2))
+          const ry = Math.floor(antonius.height / 2 + Math.random() * (app.renderer.height - antonius.height / 2))
+          antonius.moveTo(rx, ry, 50, moveToRandomLocation)
         }
         moveToRandomLocation()
 
-        stage.addChild(anim)
+        stage.addChild(antonius)
 
         app.stage.addChild(stage)
       }
