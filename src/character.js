@@ -48,6 +48,7 @@ define(() => {
     }
 
     set state(newState) {
+      if (this._state == newState) return
       this._state = newState
       if (this.states[newState]) {
         this.states[newState].call(this)

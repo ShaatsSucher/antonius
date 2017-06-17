@@ -5,7 +5,7 @@ define(['character', 'util'],
   class Stage extends PIXI.Container {
     constructor(backgroundName, character) {
       super()
-      this.addChild(new pixi.Sprite(PIXI.loader.resources[backgroundName].texture))
+      this.addChild(new PIXI.Sprite(PIXI.loader.resources[backgroundName].texture))
       this.visible = false
       this.stages = { }
     }
@@ -65,15 +65,37 @@ define(['character', 'util'],
     constructor(character) {
       super('background-bard', character)
 
-      const goose = new Character({
-        speaking: util.createAnimation(PIXI.loader.resources['goose-talk-cycle'], 1 / 4)
-      }, 135, 80)
-      this.addChild(goose)
+      const sounds = util.range(1, 15).map(i => {
+        const res = PIXI.loader.resources[`gans-${util.intToString(i, 3)}`]
+        return res.sound
+      })
 
+      const goose = new Character({
+        idle: util.createAnimation([PIXI.loader.resources['goose-talk-cycle'][0]], 1 / 8),
+        speaking: util.createAnimation(PIXI.loader.resources['goose-talk-cycle'], 1 / 8)
+      }, 135, 120, {
+        speaking: function() {
+          this.activeAnimation = this.animations.speaking
+          util.playRandomSound(sounds, 5, null, () => {
+            this.state = 'idle'
+          })
+        }
+      })
+      goose.scale = new pixi.Point(2, 2)
+      goose.clickable = true
+      goose.on('pointerdown', () => {
+        // util.playRandomSound(sounds, 5)
+        goose.state = 'speaking'
+      })
+      goose.animations.speaking.loop = true
+      // goose.activeAnimation.gotoAndPlay(0)
+      goose.state = 'idle'
+
+      console.dir(PIXI.loader.resources['goose-talk-cycle'])
+      this.addChild(goose)
     }
 
     beforeShow(previousStage) {
-
     }
   }
 

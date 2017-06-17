@@ -69,7 +69,7 @@ require(['assets'],
         })
         stage.addChild(antonius)
 
-        stages.head.visible = true
+        stages.bard.visible = true
         antonius.visible = true
 
         app.stage.addChild(stage)
