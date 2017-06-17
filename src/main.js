@@ -37,19 +37,29 @@ require(['assets'],
       function setup() {
         const stage = new Container()
 
-        let antonius = new Character({
-          walking: util.createAnimation(loader.resources['walk-cycle'], 1 / 8)
-        }, 100, 100)
-        antonius.clickable = true
-        antonius.sizeMultiplier = 4
-
         const sounds = util.range(1, 15).map(i => {
           const res = loader.resources[`gans-${util.intToString(i, 3)}`]
           return res.sound
         })
+
+        let antonius = new Character({
+          idle: util.createAnimation([loader.resources['walk-cycle'][0]], 1 / 8),
+          walking: util.createAnimation(loader.resources['walk-cycle'], 1 / 8),
+          talking: util.createAnimation(loader.resources['talk-cycle'], 1 / 8)
+        }, 100, 100, {
+          talking: function() {
+            this.activeAnimation = this.animations.talking
+            let talkingDone = false
+            antonius.say('Quack!', () => { talkingDone = true })
+            util.playRandomSound(sounds, () => !talkingDone, null, () => {
+              this.state = 'idle'
+            })
+          }
+        })
+        antonius.clickable = true
+        antonius.sizeMultiplier = 4
         antonius.on('pointerdown', () => {
-          util.playRandomSound(sounds, 5)
-          antonius.say("Quack!")
+          antonius.state = 'talking'
         })
 
         const stages = {
@@ -57,12 +67,12 @@ require(['assets'],
           head: new Stage.HeadStage(antonius)
         }
 
-        function moveToRandomLocation() {
-          const rx = Math.floor(32 / 2 + Math.random() * (app.renderer.width - 32 / 2))
-          const ry = Math.floor(antonius.height / 2 + Math.random() * (app.renderer.height - antonius.height / 2))
-          antonius.moveTo(rx, ry, 40, moveToRandomLocation)
-        }
-        moveToRandomLocation()
+        // function moveToRandomLocation() {
+        //   const rx = Math.floor(32 / 2 + Math.random() * (app.renderer.width - 32 / 2))
+        //   const ry = Math.floor(antonius.height / 2 + Math.random() * (app.renderer.height - antonius.height / 2))
+        //   antonius.moveTo(rx, ry, 40, moveToRandomLocation)
+        // }
+        // moveToRandomLocation()
 
         Object.keys(stages).forEach((key) => {
           stages[key].stages = stages
