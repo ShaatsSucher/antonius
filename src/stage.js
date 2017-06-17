@@ -47,13 +47,9 @@ define(['character', 'util'],
       })
 
       this.head = new Character({
+        idle: util.createAnimation([PIXI.loader.resources['hellmouth-talk-cycle'][0]], 1 / 32),
         speaking: util.createAnimation(PIXI.loader.resources['hellmouth-talk-cycle'], 1 / 4)
       }, 135, 40, {
-        muted: function() {
-          this.animations.speaking.loop = true
-          this.activeAnimation = this.animations.speaking
-          this.activeAnimation.gotoAndPlay(0)
-        },
         speaking: function() {
           this.animations.speaking.loop = false
           this.activeAnimation = this.animations.speaking
@@ -64,11 +60,11 @@ define(['character', 'util'],
             () => { self.head.animations.speaking.gotoAndPlay(0) }
           )
         }
-      }, 'muted')
+      }, 'idle')
 
       this.head.clickable = true
       this.head.on('pointerdown', () => {
-        this.head.state = this.head.state == 'muted' ? 'speaking' : 'muted'
+        this.head.state = this.head.state == 'idle' ? 'speaking' : 'idle'
       })
 
       this.addChild(this.head)
