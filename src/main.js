@@ -61,6 +61,32 @@ require(['assets'],
           playRandomSound(5)()
         })
 
+        function moveTo(x, y, t, done) {
+          let time = 0
+          const initialX = anim.x
+          const initialY = anim.y
+          function tickerListener(deltaT) {
+            time += deltaT
+            let percent = time / t
+            if (percent > 1) {
+              anim.x = x
+              anim.y = y
+              app.ticker.remove(tickerListener)
+              return done && done()
+            }
+            anim.x = initialX + (x - initialX) * percent
+            anim.y = initialY + (y - initialY) * percent
+          }
+          app.ticker.add(tickerListener)
+        }
+
+        function moveToRandomLocation() {
+          const rx = Math.floor(Math.random() * (app.renderer.width - anim.width))
+          const ry = Math.floor(Math.random() * (app.renderer.height - anim.height))
+          moveTo(rx, ry, 200, moveToRandomLocation)
+        }
+        moveToRandomLocation()
+
         stage.addChild(anim)
 
         app.stage.addChild(stage)
