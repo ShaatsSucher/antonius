@@ -31,7 +31,7 @@ define(['util'], (util) => {
         frameTexture.frame = new PIXI.Rectangle(i, 0, width, height)
         frames.push(frameTexture)
       }
-      return new PIXI.extras.AnimatedSprite(frames)
+      return frames
     }
 
     function doneLoading() {
