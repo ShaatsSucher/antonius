@@ -14,8 +14,8 @@ require(['assets'],
         ( Assets ) => {
   PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST
   Assets.load(() => {
-    require(['map', 'stage', 'player', 'inventory'],
-            ( Map,   Stage,   Player,   Inventory ) => {
+    require(['map', 'stage', 'player', 'inventory', 'util'],
+            ( Map,   Stage,   Player,   Inventory,   util ) => {
       const { Application, Container, Sprite, loader, sound } = pixi
       const { resources } = loader
       const app = initRenderer()
@@ -37,20 +37,30 @@ require(['assets'],
       function setup() {
         const stage = new Container()
 
-        const sounds = [1,2,3,4,5].map(i => loader.resources[`gans-00${i}`].sound)
+        const test = util.range(1, 15).map(i => util.intToString(i, 3))
+        const sounds = util.range(1, 15).map(i => {
+          const res = loader.resources[`gans-${util.intToString(i, 3)}`]
+          return res.sound
+        })
+
         function playRandomSound (count) {
           return () => {
             if (count <= 0) return
-            const random = Math.floor(Math.random() * 5)
+            const random = Math.floor(Math.random() * sounds.length)
             const nextSound = sounds[random]
             nextSound.play(playRandomSound(count - 1))
           }
         }
-        playRandomSound(10)()
 
         let anim = loader.resources['walk-cycle']
         anim.animationSpeed = 1 / 8
         anim.play()
+        anim.interactive = true
+        anim.buttonMode = true
+        anim.on('pointerdown', () => {
+          playRandomSound(5)()
+        })
+
         stage.addChild(anim)
 
         app.stage.addChild(stage)
