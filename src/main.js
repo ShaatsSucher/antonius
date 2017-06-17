@@ -43,7 +43,7 @@ require(['assets'],
         })
 
         let antonius = new Character({
-          idle: util.createAnimation([loader.resources['walk-cycle'][0]], 1 / 8),
+          idle: util.createAnimation([loader.resources['talk-cycle'][0]], 1 / 8),
           walking: util.createAnimation(loader.resources['walk-cycle'], 1 / 8),
           talking: util.createAnimation(loader.resources['talk-cycle'], 1 / 8)
         }, 100, 100, {
