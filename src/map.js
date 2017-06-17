@@ -1,6 +1,5 @@
 'use strict'
 
-define(['clickable'],
-       ( Clickable ) => {
+define(() => {
 
 })
