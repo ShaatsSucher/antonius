@@ -6,7 +6,6 @@ define(() => {
       super()
       this.x = posX
       this.y = posY
-      this.pivot = new PIXI.Point(16, 32)
       this.animations = animations
 
       this.states = {}
@@ -18,19 +17,40 @@ define(() => {
       Object.keys(states || {}).forEach(name => {
         this.states[name] = states[name]
       })
+      this.defaultState = defaultState || Object.keys(this.states)[0]
 
       for (let key of Object.keys(this.animations)) {
         const animation = this.animations[key]
         this.addChild(animation)
         animation.visible = false
       }
+    }
 
-      this.state = defaultState || Object.keys(this.states)[0]
+    show() {
+      this.state = this.defaultState
       if (!this.activeAnimation) {
         this.activeAnimation = this.animations[Object.keys(this.animations)[0]]
       }
-      this.width = this.activeAnimation.width
-      this.height = this.activeAnimation.height
+      this.visible = true
+    }
+
+    hide() {
+      this.visible = false
+    }
+
+    get sizeMultiplier() {
+      return this._sizeMultiplier
+    }
+
+    set sizeMultiplier(value) {
+      this._sizeMultiplier = value
+      Object.keys(this.animations).forEach(key => {
+        const animation = this.animations[key]
+        const scaleX = value * Math.sign(animation.scale.x)
+        const scaleY = value * Math.sign(animation.scale.y)
+        animation.scale = new PIXI.Point(scaleX, scaleY)
+        animation.pivot = new PIXI.Point(Math.abs(animation.width) / 2 / value, 0)
+      })
     }
 
     get activeAnimation() {
@@ -43,6 +63,8 @@ define(() => {
         this.activeAnimation.visible = false
       }
       this._activeAnimation = animation
+      this.width = this.activeAnimation.width
+      this.height = this.activeAnimation.height
       this.activeAnimation.visible = true
       this.activeAnimation.gotoAndPlay && this.activeAnimation.gotoAndPlay(0)
     }
@@ -60,11 +82,17 @@ define(() => {
     }
 
     faceLeft() {
-      this.scale = new PIXI.Point(Math.abs(this.scale.x), this.scale.y)
+      Object.keys(this.animations).forEach(key => {
+        const animation = this.animations[key]
+        animation.scale = new PIXI.Point(Math.abs(animation.scale.x), animation.scale.y)
+      })
     }
 
     faceRight() {
-      this.scale = new PIXI.Point(-Math.abs(this.scale.x), this.scale.y)
+      Object.keys(this.animations).forEach(key => {
+        const animation = this.animations[key]
+        animation.scale = new PIXI.Point(-Math.abs(animation.scale.x), animation.scale.y)
+      })
     }
 
     get clickable() {
