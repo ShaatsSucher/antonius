@@ -17,5 +17,10 @@ define({
   intToString(value, padding) {
     const tmp = '0'.repeat(padding) + value
     return tmp.substr(tmp.length - padding)
+  },
+  createAnimation(texture, speed) {
+    const animation = new PIXI.extras.AnimatedSprite(texture)
+    animation.animationSpeed = speed
+    return animation
   }
 })
