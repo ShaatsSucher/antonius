@@ -17,7 +17,7 @@ define(['util'], (util) => {
     ]
 
     util.range(1, 15).forEach(i => loadStuff.push({ name: `gans-${util.intToString(i, 3)}`, url: `aud/Gans-${util.intToString(i, 3)}.wav`}))
-    util.range(1, 39).forEach(i => loadStuff.push({ name: `hellmouth-${util.intToString(i, 3)}`, url: `aud/craesbeek/Großes Face ${util.intToString(i, 2)}.wav`}))
+    util.range(1, 39).forEach(i => loadStuff.push({ name: `hellmouth-${util.intToString(i, 3)}`, url: `aud/craesbeeck/hellmouth-${util.intToString(i, 2)}.wav`}))
 
     PIXI.loader
       .add(loadStuff)
