@@ -64,6 +64,12 @@ define(['character', 'util'],
   class BardStage extends Stage {
     constructor(character) {
       super('background-bard', character)
+
+      const goose = new Character({
+        speaking: util.createAnimation(PIXI.loader.resources['goose-talk-cycle'], 1 / 4)
+      }, 135, 80)
+      this.addChild(goose)
+
     }
 
     beforeShow(previousStage) {
