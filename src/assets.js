@@ -5,10 +5,6 @@ define(['lib/pixi.min'],
   return { load: (loadingDone) => {
     const { loader } = PIXI
 
-    let u =  new SpriteUtilities(PIXI)
-
-    // u.filmstrip('antonius - walk cycle.png', 32, 32)
-
     loader.add([
       { name: 'placeholder-1', url: 'img/placeholder-1.png' },
       { name: 'placeholder-2', url: 'img/placeholder-2.png' },

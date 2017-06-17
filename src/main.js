@@ -32,36 +32,19 @@ require(['lib/pixi.min', 'assets'],
       }
 
       function setup() {
-        // const sprites = [1,2,3,4]
-        //   .map(i => `placeholder-${i}`)
-        //   .map(name => loader.resources[name].texture)
-        //   .map(texture => new Sprite(texture))
-
         const frames = [1,2,3,4]
           .map(i => `placeholder-${i}`)
           .map(name => loader.resources[name].texture)
 
-        let anim = loader.resources['walk-cycle']
-
         const stage = new Container()
-        // sprites.forEach(sprite => {
-        //   stage.addChild(sprite)
-        // })
 
+        let anim = loader.resources['walk-cycle']
         anim.animationSpeed = 1 / 8
         anim.play()
-
-
         stage.addChild(anim)
-
-
-
 
         app.stage.addChild(stage)
       }
-
-
-
     })
   })
 })
