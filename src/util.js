@@ -10,7 +10,7 @@ function* rangeGenerator(min, max) {
     yield value++
 }
 
-define({
+const utils = {
   range(min, max) {
     return [...rangeGenerator(min, max)]
   },
@@ -22,5 +22,20 @@ define({
     const animation = new PIXI.extras.AnimatedSprite(texture)
     animation.animationSpeed = speed
     return animation
+  },
+  playRandomSound(sounds, count, soundPlayed, playbackDone, lastSound) {
+    if (count == 0) return playbackDone()
+    let nextSound = lastSound
+    do {
+      const random = Math.floor(Math.random() * sounds.length)
+      nextSound = sounds[random]
+    } while (nextSound == lastSound)
+
+    nextSound.play(() => {
+      soundPlayed && soundPlayed()
+      utils.playRandomSound(sounds, count - 1, soundPlayed, playbackDone, nextSound)
+    })
   }
-})
+}
+
+define(utils)

@@ -37,27 +37,18 @@ require(['assets'],
       function setup() {
         const stage = new Container()
 
-        const sounds = util.range(1, 15).map(i => {
-          const res = loader.resources[`gans-${util.intToString(i, 3)}`]
-          return res.sound
-        })
-
-        function playRandomSound (count) {
-          return () => {
-            if (count <= 0) return
-            const random = Math.floor(Math.random() * sounds.length)
-            const nextSound = sounds[random]
-            nextSound.play(playRandomSound(count - 1))
-          }
-        }
-
         let antonius = new Character({
           walking: util.createAnimation(loader.resources['walk-cycle'], 1 / 8)
         }, 100, 100)
         antonius.clickable = true
         antonius.scale = new pixi.Point(2, 2)
+
+        const sounds = util.range(1, 15).map(i => {
+          const res = loader.resources[`gans-${util.intToString(i, 3)}`]
+          return res.sound
+        })
         antonius.on('pointerdown', () => {
-          playRandomSound(5)()
+          util.playRandomSound(sounds, 5)
         })
 
         const stages = {
@@ -78,7 +69,7 @@ require(['assets'],
         })
         stage.addChild(antonius)
 
-        stages.bard.visible = true
+        stages.head.visible = true
         antonius.visible = true
 
         app.stage.addChild(stage)
