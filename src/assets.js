@@ -43,7 +43,7 @@ define(['util'], (util) => {
     function doneLoading() {
       PIXI.loader.resources['walk-cycle'] = loadAnimation('antonius-walk-cycle-sprites', 32, 32)
       PIXI.loader.resources['talk-cycle'] = loadAnimation('antonius-talk-cycle-sprites', 32, 32)
-      PIXI.loader.resources['hell-talk-cycle'] = loadAnimation('hellmouth-talk-cycle-sprites', 128, 128)
+      PIXI.loader.resources['hellmouth-talk-cycle'] = loadAnimation('hellmouth-talk-cycle-sprites', 128, 128)
 
       console.log('loading done')
       loadingDone()

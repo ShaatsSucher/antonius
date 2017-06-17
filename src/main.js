@@ -15,7 +15,7 @@ require(['assets'],
   PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST
   Assets.load(() => {
     require(['map', 'stage', 'character', 'inventory', 'util'],
-            ( Map,   Stage,   Character,   Inventory,   util ) => {
+            ( Map,   Stage,  Character,   Inventory,   util ) => {
       const { Application, Container, Sprite, loader, sound } = pixi
       const { resources } = loader
       const app = initRenderer()
@@ -61,8 +61,8 @@ require(['assets'],
         })
 
         const stages = {
-          bard: new Stage(new pixi.Sprite(loader.resources['background-bard'].texture), antonius),
-          head: new Stage(new pixi.Sprite(loader.resources['background-head'].texture), antonius)
+          bard: new Stage.BardStage('background-bard', antonius),
+          head: new Stage.HeadStage(antonius)
         }
 
         function moveToRandomLocation() {
@@ -78,7 +78,7 @@ require(['assets'],
         })
         stage.addChild(antonius)
 
-        stages.head.visible = true
+        stages.bard.visible = true
         antonius.visible = true
 
         app.stage.addChild(stage)
