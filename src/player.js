@@ -1,7 +1,7 @@
 'use strict'
 
-define(['inventory', 'sound'],
-       ( Inventory,   Sound ) => {
+define(['inventory'],
+       ( Inventory ) => {
 
   // class Player {
   //   constructor(sprites, posx, posy) {

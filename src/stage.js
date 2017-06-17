@@ -1,6 +1,6 @@
 'use strict'
 
-define(['clickable', 'player', 'sound'],
-       ( Clickable,   Player,   Sound ) => {
+define(['clickable', 'player'],
+       ( Clickable,   Player ) => {
 
 })
