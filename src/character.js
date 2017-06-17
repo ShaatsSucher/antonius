@@ -29,7 +29,6 @@ define(() => {
       if (!this.activeAnimation) {
         this.activeAnimation = this.animations[Object.keys(this.animations)[0]]
       }
-      console.dir(this.activeAnimation)
       this.width = this.activeAnimation.width
       this.height = this.activeAnimation.height
     }
