@@ -148,14 +148,13 @@ define(() => {
       PIXI.ticker.shared.add(tickerListener)
     }
 
-    say(string, done) {
+    say(string, ttl, done) {
       // create some white text using the Snippet webfont
       this.text.setText(string)
       this.text.x = -this.text.width / 2
       this.text.visible = true
 
       let time = 0
-      let ttl = 100
 
       PIXI.ticker.shared.remove(tickerListener)
 

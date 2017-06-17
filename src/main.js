@@ -46,21 +46,20 @@ require(['assets'],
           idle: util.createAnimation([loader.resources['talk-cycle'][0]], 1 / 8),
           walking: util.createAnimation(loader.resources['walk-cycle'], 1 / 8),
           talking: util.createAnimation(loader.resources['talk-cycle'], 1 / 8)
-        }, 100, 100, {
-          talking: function() {
-            this.activeAnimation = this.animations.talking
-            let talkingDone = false
-            antonius.say('Quack!', () => { talkingDone = true })
-            util.playRandomSound(sounds, () => !talkingDone, null, () => {
-              this.state = 'idle'
-            })
+        }, 100, 100)
+        const talkingShort = util.range(1, 101).map(i => PIXI.loader.resources[`antonius-short-${util.intToString(i, 3)}`].sound)
+        const talkingLong = util.range(1, 31).map(i => PIXI.loader.resources[`antonius-long-${util.intToString(i, 3)}`].sound)
+        antonius.talk = function talk(sequence, done) {
+          let seq = sequence.split('')
+          function playNext() {
+            if (seq.length == 0) return done && done()
+            const samples = seq.shift() == 's' ? talkingShort : talkingLong
+            const random = Math.floor(Math.random() * samples.length)
+            const sound = samples[random]
+            sound.play(playNext)
           }
-        })
-        antonius.clickable = true
-        antonius.sizeMultiplier = 4
-        antonius.on('pointerdown', () => {
-          antonius.state = 'talking'
-        })
+          playNext()
+        }
 
         const stages = {
           bard: new Stage.BardStage(antonius),
@@ -79,10 +78,11 @@ require(['assets'],
           stage.addChild(stages[key])
         })
 
-        stages.bard.show()
-
         app.stage.addChild(stage)
         app.stage.addChild(antonius)
+
+        stages.head.show()
+        stages.head.scene1()
       }
     })
   })

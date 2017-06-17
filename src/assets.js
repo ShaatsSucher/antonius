@@ -14,11 +14,21 @@ define(['util'], (util) => {
       { name: 'hellmouth-talk-cycle-sprites', url: 'img/hellmouth-talkcycle.png'},
       { name: 'goose-talk-cycle-sprites', url: 'img/goose-talkcycle.png'},
       { name: 'background-head', url: 'img/background-head.png' },
-      { name: 'background-bard', url: 'img/background-bard.png' }
+      { name: 'background-bard', url: 'img/background-bard.png' },
+      { name: 'bard-song', url: 'aud/bard/Song.ogg' }
     ]
 
     util.range(1, 15).forEach(i => loadStuff.push({ name: `gans-${util.intToString(i, 3)}`, url: `aud/Gans-${util.intToString(i, 3)}.wav`}))
     util.range(1, 39).forEach(i => loadStuff.push({ name: `hellmouth-${util.intToString(i, 3)}`, url: `aud/craesbeeck/hellmouth-${util.intToString(i, 2)}.wav`}))
+    util.range(1, 101).forEach(i => loadStuff.push({ name: `antonius-short-${util.intToString(i, 3)}`, url: `aud/antonius/kurz/Antonius kurz-${util.intToString(i, 3)}.wav`}))
+    util.range(1, 31).forEach(i => loadStuff.push({ name: `antonius-long-${util.intToString(i, 3)}`, url: `aud/antonius/lang/Antonius lang-${util.intToString(i, 3)}.wav`}))
+    util.range(1, 7).forEach(i => loadStuff.push({ name: `bard-do-${util.intToString(i, 3)}`, url: `aud/bard/Do/Do-${util.intToString(i, 3)}.wav`}))
+    util.range(1, 7).forEach(i => loadStuff.push({ name: `bard-re-${util.intToString(i, 3)}`, url: `aud/bard/Re/Re-${util.intToString(i, 3)}.wav`}))
+    util.range(1, 7).forEach(i => loadStuff.push({ name: `bard-mi-${util.intToString(i, 3)}`, url: `aud/bard/Mi/Mi-${util.intToString(i, 3)}.wav`}))
+    util.range(1, 7).forEach(i => loadStuff.push({ name: `bard-fa-${util.intToString(i, 3)}`, url: `aud/bard/Fa/Fa-${util.intToString(i, 3)}.wav`}))
+    util.range(1, 6).forEach(i => loadStuff.push({ name: `bard-so-${util.intToString(i, 3)}`, url: `aud/bard/So/So-${util.intToString(i, 3)}.wav`}))
+    util.range(1, 6).forEach(i => loadStuff.push({ name: `bard-la-${util.intToString(i, 3)}`, url: `aud/bard/La/La-${util.intToString(i, 3)}.wav`}))
+    util.range(1, 7).forEach(i => loadStuff.push({ name: `bard-ti-${util.intToString(i, 3)}`, url: `aud/bard/Ti/Ti-${util.intToString(i, 3)}.wav`}))
 
     PIXI.loader
       .add(loadStuff)
