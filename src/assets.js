@@ -33,7 +33,7 @@ define(['util'], (util) => {
     function loadAnimation(textureName, width, height) {
       const spriteSheet = PIXI.loader.resources[textureName].texture.baseTexture
       let frames = []
-      for (let i = 0; i < spriteSheet.width - width; i += width) {
+      for (let i = 0; i <= spriteSheet.width - width; i += width) {
         const frameTexture = new PIXI.Texture(spriteSheet)
         frameTexture.frame = new PIXI.Rectangle(i, 0, width, height)
         frames.push(frameTexture)
