@@ -23,7 +23,7 @@ require(['assets'],
       setup()
 
       function initRenderer() {
-        const app = new Application(384, 260, { backgroundColor: 0x00deff })
+        const app = new Application(384, 216, { backgroundColor: 0x00deff })
         app.view.style.position = 'absolute'
         app.view.style.display = 'block'
         // app.autoresize = true
@@ -56,19 +56,31 @@ require(['assets'],
           walking: util.createAnimation(loader.resources['walk-cycle'], 1 / 8)
         }, 100, 100)
         antonius.clickable = true
+        antonius.scale = new pixi.Point(2, 2)
         antonius.on('pointerdown', () => {
           playRandomSound(5)()
         })
-        stage.addChild(antonius)
+
+        const stages = {
+          bard: new Stage(new pixi.Sprite(loader.resources['background-bard'].texture), antonius),
+          head: new Stage(new pixi.Sprite(loader.resources['background-head'].texture), antonius)
+        }
 
         function moveToRandomLocation() {
           const rx = Math.floor(32 / 2 + Math.random() * (app.renderer.width - 32 / 2))
           const ry = Math.floor(antonius.height / 2 + Math.random() * (app.renderer.height - antonius.height / 2))
-          antonius.moveTo(rx, ry, 50, moveToRandomLocation)
+          antonius.moveTo(rx, ry, 40, moveToRandomLocation)
         }
         moveToRandomLocation()
 
+        Object.keys(stages).forEach((key) => {
+          stages[key].stages = stages
+          stage.addChild(stages[key])
+        })
         stage.addChild(antonius)
+
+        stages.head.visible = true
+        antonius.visible = true
 
         app.stage.addChild(stage)
       }

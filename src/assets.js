@@ -11,15 +11,18 @@ define(['util'], (util) => {
       { name: 'placeholder-4', url: 'img/placeholder-4.png' },
       { name: 'antonius-walk-cycle-sprites', url: 'img/antonius-walkcycle.png'},
       { name: 'antonius-talk-cycle-sprites', url: 'img/antonius-talkcycle.png'},
-      { name: 'hellmouth-talk-cycle-sprites', url: 'img/hellmouth-talkcycle.png'}
+      { name: 'hellmouth-talk-cycle-sprites', url: 'img/hellmouth-talkcycle.png'},
+      { name: 'background-head', url: 'img/background-head.png' },
+      { name: 'background-bard', url: 'img/background-bard.png' }
     ]
 
     util.range(1, 15).forEach(i => loadStuff.push({ name: `gans-${util.intToString(i, 3)}`, url: `aud/Gans-${util.intToString(i, 3)}.wav`}))
     util.range(1, 39).forEach(i => loadStuff.push({ name: `hellmouth-${util.intToString(i, 3)}`, url: `aud/craesbeek/Großes Face ${util.intToString(i, 2)}.wav`}))
 
-    PIXI.loader.add(loadStuff)
-    .on('progress', onProgress)
-    .load(doneLoading)
+    PIXI.loader
+      .add(loadStuff)
+      .on('progress', onProgress)
+      .load(doneLoading)
 
     function onProgress(loader, resource) {
       console.log(`loading ${resource.url}`)
