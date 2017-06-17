@@ -24,6 +24,17 @@ define(() => {
         this.addChild(animation)
         animation.visible = false
       }
+
+      this.text = new PIXI.Text('', {
+        fontFamily: 'Arial',
+        fontSize: 12,
+        fill: 'white',
+        stroke: 'black',
+        strokeThickness: 2
+      })
+      this.text.visible = false
+      this.text.y = -10
+      this.addChild(this.text)
     }
 
     show() {
@@ -140,6 +151,7 @@ define(() => {
     say(string, done) {
       // create some white text using the Snippet webfont
       this.text.setText(string)
+      this.text.x = -this.text.width / 2
       this.text.visible = true
 
       let time = 0
@@ -157,7 +169,6 @@ define(() => {
         }
       }
       PIXI.ticker.shared.add(tickerListener)
-
     }
   }
 
