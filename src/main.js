@@ -37,7 +37,6 @@ require(['assets'],
       function setup() {
         const stage = new Container()
 
-        const test = util.range(1, 15).map(i => util.intToString(i, 3))
         const sounds = util.range(1, 15).map(i => {
           const res = loader.resources[`gans-${util.intToString(i, 3)}`]
           return res.sound
