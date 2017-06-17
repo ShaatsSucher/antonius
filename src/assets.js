@@ -9,10 +9,13 @@ define(['util'], (util) => {
       { name: 'placeholder-2', url: 'img/placeholder-2.png' },
       { name: 'placeholder-3', url: 'img/placeholder-3.png' },
       { name: 'placeholder-4', url: 'img/placeholder-4.png' },
-      { name: 'walk-cycle-sprites', url: 'img/antonius-walkcycle.png'}
+      { name: 'antonius-walk-cycle-sprites', url: 'img/antonius-walkcycle.png'},
+      { name: 'antonius-talk-cycle-sprites', url: 'img/antonius-talkcycle.png'},
+      { name: 'hellmouth-talk-cycle-sprites', url: 'img/hellmouth-talkcycle.png'}
     ]
 
     util.range(1, 15).forEach(i => loadStuff.push({ name: `gans-${util.intToString(i, 3)}`, url: `aud/Gans-${util.intToString(i, 3)}.wav`}))
+    util.range(1, 39).forEach(i => loadStuff.push({ name: `hellmouth-${util.intToString(i, 3)}`, url: `aud/craesbeek/Großes Face ${util.intToString(i, 2)}.wav`}))
 
     PIXI.loader.add(loadStuff)
     .on('progress', onProgress)
@@ -35,7 +38,9 @@ define(['util'], (util) => {
     }
 
     function doneLoading() {
-      PIXI.loader.resources['walk-cycle'] = loadAnimation('walk-cycle-sprites', 32, 32)
+      PIXI.loader.resources['walk-cycle'] = loadAnimation('antonius-walk-cycle-sprites', 32, 32)
+      PIXI.loader.resources['talk-cycle'] = loadAnimation('antonius-talk-cycle-sprites', 32, 32)
+      PIXI.loader.resources['hell-talk-cycle'] = loadAnimation('hellmouth-talk-cycle-sprites', 128, 128)
 
       console.log('loading done')
       loadingDone()
