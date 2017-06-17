@@ -2,31 +2,55 @@
 
 define(() => {
   class Character extends PIXI.Container {
-    constructor(animations, posX, posY) {
+    constructor(animations, posX, posY, states, defaultState) {
       super()
       this.x = posX
       this.y = posY
-      this.pivot = new PIXI.Point(16, 32)
       this.animations = animations
+
+      this.states = {}
+      Object.keys(animations).forEach(name => {
+        this.states[name] = function() {
+          this.activeAnimation = this.animations[name]
+        }
+      })
+      Object.keys(states || {}).forEach(name => {
+        this.states[name] = states[name]
+      })
+      this.defaultState = defaultState || Object.keys(this.states)[0]
 
       for (let key of Object.keys(this.animations)) {
         const animation = this.animations[key]
         this.addChild(animation)
         animation.visible = false
       }
+    }
 
-      this.state = Object.keys(animations)[0]
-      this.width = this.activeAnimation.width
-      this.height = this.activeAnimation.height
+    show() {
+      this.state = this.defaultState
+      if (!this.activeAnimation) {
+        this.activeAnimation = this.animations[Object.keys(this.animations)[0]]
+      }
+      this.visible = true
+    }
 
-      this.text = new PIXI.Text("ihre Werbung hier!", {
-          fontFamily: 'Arial',
-          fontSize: 12,
-          fill: 'white',
-          align: 'left'
-      });
-      this.text.visible = false
-      this.addChild(this.text)
+    hide() {
+      this.visible = false
+    }
+
+    get sizeMultiplier() {
+      return this._sizeMultiplier
+    }
+
+    set sizeMultiplier(value) {
+      this._sizeMultiplier = value
+      Object.keys(this.animations).forEach(key => {
+        const animation = this.animations[key]
+        const scaleX = value * Math.sign(animation.scale.x)
+        const scaleY = value * Math.sign(animation.scale.y)
+        animation.scale = new PIXI.Point(scaleX, scaleY)
+        animation.pivot = new PIXI.Point(Math.abs(animation.width) / 2 / value, 0)
+      })
     }
 
     get activeAnimation() {
@@ -39,13 +63,18 @@ define(() => {
         this.activeAnimation.visible = false
       }
       this._activeAnimation = animation
+      this.width = this.activeAnimation.width
+      this.height = this.activeAnimation.height
       this.activeAnimation.visible = true
       this.activeAnimation.gotoAndPlay && this.activeAnimation.gotoAndPlay(0)
     }
 
     set state(newState) {
+      if (this._state == newState) return
       this._state = newState
-      this.activeAnimation = this.animations[newState]
+      if (this.states[newState]) {
+        this.states[newState].call(this)
+      }
     }
 
     get state() {
@@ -53,11 +82,17 @@ define(() => {
     }
 
     faceLeft() {
-      this.activeAnimation.scale = new PIXI.Point(Math.abs(this.activeAnimation.scale.x), this.activeAnimation.scale.y)
+      Object.keys(this.animations).forEach(key => {
+        const animation = this.animations[key]
+        animation.scale = new PIXI.Point(Math.abs(animation.scale.x), animation.scale.y)
+      })
     }
 
     faceRight() {
-      this.activeAnimation.scale = new PIXI.Point(-Math.abs(this.activeAnimation.scale.x), this.activeAnimation.scale.y)
+      Object.keys(this.animations).forEach(key => {
+        const animation = this.animations[key]
+        animation.scale = new PIXI.Point(-Math.abs(animation.scale.x), animation.scale.y)
+      })
     }
 
     get clickable() {

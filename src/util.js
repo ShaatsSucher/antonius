@@ -24,7 +24,16 @@ const utils = {
     return animation
   },
   playRandomSound(sounds, count, soundPlayed, playbackDone, lastSound) {
-    if (count == 0) return playbackDone()
+    if (count == 0) return playbackDone && playbackDone()
+    let nextCount
+    if (!Number.isInteger(count)) {
+      if (!count()) {
+        return playbackDone && playbackDone()
+      }
+      nextCount = count
+    } else {
+      nextCount = count - 1
+    }
     let nextSound = lastSound
     do {
       const random = Math.floor(Math.random() * sounds.length)
@@ -33,7 +42,7 @@ const utils = {
 
     nextSound.play(() => {
       soundPlayed && soundPlayed()
-      utils.playRandomSound(sounds, count - 1, soundPlayed, playbackDone, nextSound)
+      utils.playRandomSound(sounds, nextCount, soundPlayed, playbackDone, nextSound)
     })
   }
 }

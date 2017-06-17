@@ -41,7 +41,7 @@ require(['assets'],
           walking: util.createAnimation(loader.resources['walk-cycle'], 1 / 8)
         }, 100, 100)
         antonius.clickable = true
-        antonius.scale = new pixi.Point(2, 2)
+        antonius.sizeMultiplier = 4
 
         const sounds = util.range(1, 15).map(i => {
           const res = loader.resources[`gans-${util.intToString(i, 3)}`]
@@ -53,7 +53,7 @@ require(['assets'],
         })
 
         const stages = {
-          bard: new Stage.BardStage('background-bard', antonius),
+          bard: new Stage.BardStage(antonius),
           head: new Stage.HeadStage(antonius)
         }
 
@@ -68,12 +68,11 @@ require(['assets'],
           stages[key].stages = stages
           stage.addChild(stages[key])
         })
-        stage.addChild(antonius)
 
-        stages.head.visible = true
-        antonius.visible = true
+        stages.bard.show()
 
         app.stage.addChild(stage)
+        app.stage.addChild(antonius)
       }
     })
   })
