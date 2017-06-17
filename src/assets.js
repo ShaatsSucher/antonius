@@ -12,6 +12,7 @@ define(['util'], (util) => {
       { name: 'antonius-walk-cycle-sprites', url: 'img/antonius-walkcycle.png'},
       { name: 'antonius-talk-cycle-sprites', url: 'img/antonius-talkcycle.png'},
       { name: 'hellmouth-talk-cycle-sprites', url: 'img/hellmouth-talkcycle.png'},
+      { name: 'goose-talk-cycle-sprites', url: 'img/goose-talkcycle.png'},
       { name: 'background-head', url: 'img/background-head.png' },
       { name: 'background-bard', url: 'img/background-bard.png' }
     ]
@@ -44,6 +45,7 @@ define(['util'], (util) => {
       PIXI.loader.resources['walk-cycle'] = loadAnimation('antonius-walk-cycle-sprites', 32, 32)
       PIXI.loader.resources['talk-cycle'] = loadAnimation('antonius-talk-cycle-sprites', 32, 32)
       PIXI.loader.resources['hellmouth-talk-cycle'] = loadAnimation('hellmouth-talk-cycle-sprites', 128, 128)
+      PIXI.loader.resources['goose-talk-cycle'] = loadAnimation('goose-talk-cycle-sprites', 64, 64)
 
       console.log('loading done')
       loadingDone()
