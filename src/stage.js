@@ -111,7 +111,8 @@ define(['character', 'util'],
       })
       this.goose.clickable = true
       this.goose.on('pointerdown', () => {
-        this.goose.state = 'speaking'
+        this.player.state = 'walking'
+        this.player.moveTo(200, 110, 40, () => { this.player.state = 'idle'; this.goose.state = 'speaking' })
       })
       this.goose.animations.speaking.loop = true
       this.goose.state = 'idle'
@@ -123,6 +124,8 @@ define(['character', 'util'],
     beforeShow(previousStage) {
       this.goose.sizeMultiplier = 3
       this.goose.show()
+      this.player.x = 340
+      this.player.y = 120
       this.player.sizeMultiplier = 3
     }
   }
