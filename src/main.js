@@ -91,30 +91,30 @@ require(['assets'],
 
         app.stage.addChild(startButton)
 
-        // startButton.on('pointertap', playVideo)
+        startButton.on('pointertap', playVideo)
 
-        // function playVideo() {
+        function playVideo() {
           startButton.destroy()
-        //
-        //   let videoTexture = PIXI.Texture.fromVideo("vid/cutscene.mp4");
-        //   let videoSprite = new PIXI.Sprite(videoTexture);
-        //
-        //   // Stetch the fullscreen
-        //   videoSprite.width = app.renderer.width;
-        //   videoSprite.height = app.renderer.height;
-        //
-        //   app.stage.addChild(videoSprite)
-        //
-        //   util.wait(83, () => {
-        //     console.log('foo')
-        //     videoSprite._texture.baseTexture.source.pause()
-        //     videoSprite.destroy()
-        //
-        //
+
+          let videoTexture = PIXI.Texture.fromVideo("vid/cutscene.mp4");
+          let videoSprite = new PIXI.Sprite(videoTexture);
+
+          // Stetch the fullscreen
+          videoSprite.width = app.renderer.width;
+          videoSprite.height = app.renderer.height;
+
+          app.stage.addChild(videoSprite)
+
+          util.wait(83, () => {
+            console.log('foo')
+            videoSprite._texture.baseTexture.source.pause()
+            videoSprite.destroy()
+
+
             stages.head.show()
             stages.head.scene1()
-        //   })
-        // }
+          })
+        }
       }
     })
   })

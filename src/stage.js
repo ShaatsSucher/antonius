@@ -126,6 +126,41 @@ define(['character', 'util'],
         }, 64)
       })
     }
+
+    scene2() {
+      const self = this
+      const sounds = util.range(1, 39).map(i => {
+        const res = PIXI.loader.resources[`hellmouth-${util.intToString(i, 3)}`]
+        return res.sound
+      })
+
+      this.toBardArrow.visible = true
+      this.head.clickable = true
+      this.head.state = 'idle'
+
+      function helpText() {
+        self.toBardArrow.visible = false
+        self.head.clickable = false
+        self.head.state = 'speaking'
+        let done = false
+        util.playRandomSound(sounds, () => !done)
+        self.head.say('Im Moment kannst du dem Minnesänger\nleider noch nicht helfen.', 8, () => {
+          self.head.say('Im weiteren Spielverlauf findest du bestimmt\ngenau den richtigen Gegenstand für diese Situation.', 15, () => {
+            self.head.say('Komme später noch einmal zurück.', 4, () => {
+              // self.head.say('Moment Mal, hier riecht es doch nach Fisch, oder?', 6, () => {
+                // self.head.say('Ein Hinweis?', 3, () => {
+                  done = true
+                  self.head.state = 'idle'
+                  self.toBardArrow.visible = true
+                  self.head.once('pointerdown', helpText)
+                // }, 64)
+              // }, 64)
+            }, 64)
+          }, 64)
+        }, 64)
+      }
+      this.head.once('pointerdown', helpText)
+    }
   }
 
   class BardStage extends Stage {
@@ -149,6 +184,7 @@ define(['character', 'util'],
       this.toHeadArrow.buttonMode = true
       this.toHeadArrow.on('pointerdown', () => {
         this.transitionTo(this.stages.head)
+        this.stages.head.scene2()
       })
       this.addChild(this.toHeadArrow)
 
