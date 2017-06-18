@@ -23,9 +23,7 @@ require(['assets'],
       setup()
 
       function initRenderer() {
-        const app = new Application(384, 216, { backgroundColor: 0x00deff })
-        app.view.style.position = 'absolute'
-        app.view.style.display = 'block'
+        const app = new Application(384, 216, { backgroundColor: 0x000000 })
         // app.autoresize = true
         // app.renderer.resize(window.innerWidth, window.innerHeight)
 
@@ -65,13 +63,6 @@ require(['assets'],
           bard: new Stage.BardStage(antonius),
           head: new Stage.HeadStage(antonius)
         }
-
-        // function moveToRandomLocation() {
-        //   const rx = Math.floor(32 / 2 + Math.random() * (app.renderer.width - 32 / 2))
-        //   const ry = Math.floor(antonius.height / 2 + Math.random() * (app.renderer.height - antonius.height / 2))
-        //   antonius.moveTo(rx, ry, 40, moveToRandomLocation)
-        // }
-        // moveToRandomLocation()
 
         Object.keys(stages).forEach((key) => {
           stages[key].stages = stages

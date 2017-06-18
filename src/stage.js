@@ -12,9 +12,33 @@ define(['character', 'util'],
     }
 
     transitionTo(newStage) {
-      this.visible = false
-      newStage.beforeShow(this)
-      newStage.visible = true
+      const self = this
+      const transitionDuration = 2 * PIXI.ticker.shared.FPS
+      PIXI.ticker.shared.add(fadeOut)
+      let fadeOutTime = 0
+      function fadeOut(dt) {
+        fadeOutTime += dt
+        self.alpha = Math.max(0, 1 - (fadeOutTime / transitionDuration))
+        self.player.alpha = Math.max(0, 1 - (fadeOutTime / transitionDuration))
+        if (fadeOutTime >= transitionDuration) {
+          PIXI.ticker.shared.remove(fadeOut)
+          self.alpha = 0
+          self.visible = false
+          PIXI.ticker.shared.add(fadeIn)
+          newStage.beforeShow(this)
+          newStage.visible = true
+        }
+      }
+      let fadeInTime = 0
+      function fadeIn(dt) {
+        fadeInTime += dt
+        newStage.alpha = Math.min(1, fadeInTime / transitionDuration)
+        newStage.player.alpha = Math.min(1, fadeInTime / transitionDuration)
+        if (fadeInTime >= transitionDuration) {
+          PIXI.ticker.shared.remove(fadeIn)
+          newStage.alpha = 1
+        }
+      }
     }
 
     show() {
@@ -89,6 +113,17 @@ define(['character', 'util'],
   class BardStage extends Stage {
     constructor(player) {
       super('background-bard', player)
+
+      this.toHeadArrow = util.createAnimation(PIXI.loader.resources['arrow'], 1 / 8)
+      this.toHeadArrow.x = 26
+      this.toHeadArrow.y = 95
+      this.toHeadArrow.scale = new PIXI.Point(-1, 1)
+      this.toHeadArrow.interactive = true
+      this.toHeadArrow.buttonMode = true
+      this.toHeadArrow.on('pointerdown', () => {
+        this.transitionTo(this.stages.head)
+      })
+      this.addChild(this.toHeadArrow)
 
       // const nextStage = new PIXI.Sprite(PIXI.loader.resources['placeholder-1'].texture)
       // nextStage.scale = new PIXI.Point(.25, .25)
