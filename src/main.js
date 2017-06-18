@@ -81,8 +81,48 @@ require(['assets'],
         app.stage.addChild(stage)
         app.stage.addChild(antonius)
 
-        stages.head.show()
-        stages.head.scene1()
+        let startButton = new PIXI.Text('START', {
+          fontFamily: 'Arial',
+          fontSize: 40,
+          fill: 'white',
+          stroke: 'black',
+          strokeThickness: 5
+        })
+
+        // Position the button
+        startButton.x = (app.renderer.width - startButton.width) / 2;
+        startButton.y = (app.renderer.height - startButton.height) / 2;
+
+        // Enable interactivity on the button
+        startButton.interactive = true;
+        startButton.buttonMode = true;
+
+        app.stage.addChild(startButton)
+
+        startButton.on('pointertap', playVideo)
+
+        function playVideo() {
+          startButton.destroy()
+
+          let videoTexture = PIXI.Texture.fromVideo("vid/cutscene.mp4");
+          let videoSprite = new PIXI.Sprite(videoTexture);
+
+          // Stetch the fullscreen
+          videoSprite.width = app.renderer.width;
+          videoSprite.height = app.renderer.height;
+
+          app.stage.addChild(videoSprite)
+
+          util.wait(83, () => {
+            console.log('foo')
+            videoSprite._texture.baseTexture.source.pause()
+            videoSprite.destroy()
+
+
+            stages.head.show()
+            stages.head.scene1()
+          })
+        }
       }
     })
   })
