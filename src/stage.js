@@ -114,10 +114,10 @@ define(['character', 'util'],
     constructor(player) {
       super('background-bard', player)
 
-      this.toHeadArrow = new PIXI.Sprite(PIXI.loader.resources['placeholder-1'].texture)
-      this.toHeadArrow.x = 10
-      this.toHeadArrow.y = 90
-      this.toHeadArrow.scale = new PIXI.Point(.25, .25)
+      this.toHeadArrow = util.createAnimation(PIXI.loader.resources['arrow'], 1 / 8)
+      this.toHeadArrow.x = 26
+      this.toHeadArrow.y = 95
+      this.toHeadArrow.scale = new PIXI.Point(-1, 1)
       this.toHeadArrow.interactive = true
       this.toHeadArrow.buttonMode = true
       this.toHeadArrow.on('pointerdown', () => {

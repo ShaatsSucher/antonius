@@ -21,6 +21,7 @@ define(['util'], (util) => {
       { name: 'cat-walk-cycle-sprites', url: 'img/cat-walkcycle.png'},
       { name: 'background-head', url: 'img/background-head.png' },
       { name: 'background-bard', url: 'img/background-bard.png' },
+      { name: 'arrow-sprites', url: 'img/arrow-sprites.png' },
       { name: 'fish', url: 'img/fish.png' },
       { name: 'bard-song', url: 'aud/bard/Song.ogg' }
     ]
@@ -70,6 +71,7 @@ define(['util'], (util) => {
       PIXI.loader.resources['bard-play-cycle'] = loadAnimation('bard-play-cycle-sprites', 64, 64)
       PIXI.loader.resources['cat-idle-cycle'] = loadAnimation('cat-idle-cycle-sprites', 64, 64)
       PIXI.loader.resources['cat-walk-cycle'] = loadAnimation('cat-walk-cycle-sprites', 16, 16)
+      PIXI.loader.resources['arrow'] = loadAnimation('arrow-sprites', 16, 16)
 
       console.log('loading done')
       loadingDone()
