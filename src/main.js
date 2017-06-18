@@ -26,6 +26,7 @@ require(['assets'],
         const app = new Application(384, 216, { backgroundColor: 0x000000 })
         // app.autoresize = true
         // app.renderer.resize(window.innerWidth, window.innerHeight)
+        app.stage.displayList = new PIXI.DisplayList()
 
         document.body.appendChild(app.view)
 
@@ -95,24 +96,24 @@ require(['assets'],
         function playVideo() {
           startButton.destroy()
 
-          let videoTexture = PIXI.Texture.fromVideo("vid/cutscene.mp4");
-          let videoSprite = new PIXI.Sprite(videoTexture);
-
-          // Stetch the fullscreen
-          videoSprite.width = app.renderer.width;
-          videoSprite.height = app.renderer.height;
-
-          app.stage.addChild(videoSprite)
-
-          util.wait(83, () => {
-            console.log('foo')
-            videoSprite._texture.baseTexture.source.pause()
-            videoSprite.destroy()
-
+          // let videoTexture = PIXI.Texture.fromVideo("vid/cutscene.mp4");
+          // let videoSprite = new PIXI.Sprite(videoTexture);
+          //
+          // // Stetch the fullscreen
+          // videoSprite.width = app.renderer.width;
+          // videoSprite.height = app.renderer.height;
+          //
+          // app.stage.addChild(videoSprite)
+          //
+          // util.wait(83, () => {
+          //   console.log('foo')
+          //   videoSprite._texture.baseTexture.source.pause()
+          //   videoSprite.destroy()
+          //
 
             stages.head.show()
             stages.head.scene1()
-          })
+          // })
         }
       }
     })

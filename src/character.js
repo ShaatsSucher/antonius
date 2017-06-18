@@ -25,15 +25,18 @@ define(['util'], (util) => {
         animation.visible = false
       }
 
+      const textDisplayGroup = new PIXI.DisplayGroup(10, false)
       this.text = new PIXI.Text('', {
         fontFamily: 'Arial',
         fontSize: 12,
         fill: 'white',
         stroke: 'black',
+        align: 'center',
         strokeThickness: 2
       })
       this.text.visible = false
       this.text.y = -10
+      this.text.displayGroup = textDisplayGroup
       this.addChild(this.text)
     }
 
