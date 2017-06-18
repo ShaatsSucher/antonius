@@ -68,12 +68,12 @@ define(['character', 'util'],
       // this.head.state = 'speaking'
       // let done = false
       // util.playRandomSound(sounds, () => !done)
-      // this.head.say('Um Gottes Willen...', 4 * 60, () => {
-      //   this.head.say('Es toben ganz schön viele\ndieser Dämonen herum!!', 8 * 60, () => {
-      //     this.head.say('Wenn du irgendwelche Fragen hast,\nkannst du dich jederzeit an mich wenden!', 8 * 60, () => {
-      //       this.head.say('Du schaffst das, Antonius!', 4 * 60, () => {
-      //         this.head.say('Wenn nicht du, wer dann?', 4 * 60, () => {
-      //           this.head.say('Nun geh und leg los...', 6 * 60, () => {
+      // this.head.say('Um Gottes Willen...', 4, () => {
+      //   this.head.say('Es toben ganz schön viele\ndieser Dämonen herum!!', 8, () => {
+      //     this.head.say('Wenn du irgendwelche Fragen hast,\nkannst du dich jederzeit an mich wenden!', 8, () => {
+      //       this.head.say('Du schaffst das, Antonius!', 4, () => {
+      //         this.head.say('Wenn nicht du, wer dann?', 4, () => {
+      //           this.head.say('Nun geh und leg los...', 6, () => {
       //             done = true
       //             this.transitionTo(this.stages.bard)
       //           })
@@ -183,45 +183,45 @@ define(['character', 'util'],
         //   this.bardHead.state = 'idle'
         //   this.bardBody.state = 'idle'
         //   this.goose.state = 'speaking'
-        //   this.goose.say('Ach du meine Güte. Wie theatralisch!', 3 * 60, () => {
+        //   this.goose.say('Ach du meine Güte. Wie theatralisch!', 3, () => {
         //     this.goose.state = 'idle'
         //     this.player.state = 'walking'
         //     this.player.moveTo(250, 100, 40, () => {
         //       this.player.state = 'talking'
         //       this.player.talk('ssssssllsll')
-        //       this.player.say('Ihr da, auf dem fantastischen Reitwesen!', 8 * 60, () => {
+        //       this.player.say('Ihr da, auf dem fantastischen Reitwesen!', 8, () => {
         //         this.player.talk('sslsssllslssllsll')
-        //         this.player.say('Dieses Lied klingt so unendlich einsam,\nwarum seid Ihr so traurig?', 12 * 60, () => {
+        //         this.player.say('Dieses Lied klingt so unendlich einsam,\nwarum seid Ihr so traurig?', 12, () => {
         //           this.player.state = 'idle'
         //           this.bardHead.state = 'talking'
         //           bardTalk(12)
-        //           this.bardHead.say('Hört mir denn keiner zu?\nIch vermisse meine Freundin, die Reitgans, sehr!', 8 * 60, () => {
+        //           this.bardHead.say('Hört mir denn keiner zu?\nIch vermisse meine Freundin, die Reitgans, sehr!', 8, () => {
         //             this.bardHead.state = 'idle'
         //             this.goose.state = 'speaking'
-        //             this.goose.say('Soweit sind wir ja nicht voneinander entfernt…', 4 * 60, () => {
+        //             this.goose.say('Soweit sind wir ja nicht voneinander entfernt…', 4, () => {
                       // this.goose.state = 'idle'
                       // this.player.state = 'talking'
                       // this.player.talk('sslsssllslssll')
-                      // this.player.say('Stimmt, soweit seid ihr doch\nnicht voneinander entfernt.', 10 * 60, () => {
+                      // this.player.say('Stimmt, soweit seid ihr doch\nnicht voneinander entfernt.', 10, () => {
                       //   this.player.talk('ssssss')
-                      //   this.player.say('Dreh dich doch mal um. ', 3 * 60, () => {
+                      //   this.player.say('Dreh dich doch mal um. ', 3, () => {
                       //     this.player.state = 'idle'
                       //     this.bardHead.state = 'talking'
                       //     bardTalk(8)
-                      //     this.bardHead.say('Das geht nicht. Da ist etwas hinter mir!', 6 * 60, () => {
+                      //     this.bardHead.say('Das geht nicht. Da ist etwas hinter mir!', 6, () => {
                       //       this.bardHead.state = 'idle'
                       //       this.player.state = 'talking'
                       //       this.player.talk('sssslsssls')
-                      //       this.player.say('Ich sehe das Problem.\nVielleicht kann ich helfen.', 8 * 60, () => {
+                      //       this.player.say('Ich sehe das Problem.\nVielleicht kann ich helfen.', 8, () => {
                               this.player.talk('sssllss')
-                              this.player.say('Husch, Husch Katze. Lass die beiden in Ruhe!', 6 * 60, () => {
+                              this.player.say('Husch, Husch Katze. Lass die beiden in Ruhe!', 6, () => {
                                 this.player.state = 'idle'
                                 this.cat.state = 'speaking'
-                                this.cat.say('[genervtes Miauen]', 4 * 60, () => {
+                                this.cat.say('[genervtes Miauen]', 4, () => {
                                   this.cat.state = 'idle'
                                   this.player.state = 'talking'
                                   this.player.talk('slssssls')
-                                  this.player.say('Das wird wohl schwieriger als gedacht…', 6 * 60, () => {
+                                  this.player.say('Das wird wohl schwieriger als gedacht…', 6, () => {
                                     this.player.state = 'idle'
                             //     })
                             //   })

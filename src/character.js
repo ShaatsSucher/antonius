@@ -1,6 +1,6 @@
 'use strict'
 
-define(() => {
+define(['util'], (util) => {
   class Character extends PIXI.Container {
     constructor(animations, posX, posY, states, defaultState) {
       super()
@@ -151,23 +151,13 @@ define(() => {
     say(string, ttl, done) {
       // create some white text using the Snippet webfont
       this.text.setText(string)
-      this.text.x = -this.text.width / 2
       this.text.visible = true
+      this.text.x = -this.text.width / 2
 
-      let time = 0
-
-      PIXI.ticker.shared.remove(tickerListener)
-
-      self = this
-      function tickerListener(deltaT) {
-        time += deltaT
-        if (time >= ttl) {
-          self.text.visible = false
-          PIXI.ticker.shared.remove(tickerListener)
-          return done && done()
-        }
-      }
-      PIXI.ticker.shared.add(tickerListener)
+      util.wait(ttl, () => {
+        this.text.visible = false
+        done()
+      })
     }
   }
 
