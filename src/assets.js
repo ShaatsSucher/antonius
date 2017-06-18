@@ -23,7 +23,11 @@ define(['util'], (util) => {
       { name: 'background-bard', url: 'img/background-bard.png' },
       { name: 'arrow-sprites', url: 'img/arrow-sprites.png' },
       { name: 'fish', url: 'img/fish.png' },
-      { name: 'bard-song', url: 'aud/bard/Song.ogg' }
+      { name: 'bard-song', url: 'aud/bard/Song.ogg' },
+      { name: 'music-head-screen', url: 'aud/music/music head screen.ogg' },
+      { name: 'music-bard-screen', url: 'aud/music/music bard screen.ogg' },
+      { name: 'atmo-head-screen', url: 'aud/soundscapes/Atmo Screen 1.ogg' },
+      { name: 'atmo-bard-screen', url: 'aud/soundscapes/Atmo Screen 2.ogg' }
     ]
 
     util.range(1, 4).forEach(i => loadStuff.push({ name: `cat-${util.intToString(i, 3)}`, url: `aud/cat/cat denial-${util.intToString(i, 3)}.wav`}))

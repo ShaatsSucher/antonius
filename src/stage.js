@@ -64,6 +64,13 @@ define(['character', 'util'],
       })
       this.addChild(this.toBardArrow)
 
+      this.music = PIXI.loader.resources['music-head-screen'].sound
+      this.music.loop = true
+      this.music.volume = 0.2
+      this.atmo = PIXI.loader.resources['atmo-head-screen'].sound
+      this.atmo.loop = true
+      this.atmo.volume = 0.2
+
       this.head = new Character({
         idle: util.createAnimation([PIXI.loader.resources['hellmouth-talk-cycle'][0]], 1 / 32),
         speaking: util.createAnimation(PIXI.loader.resources['hellmouth-talk-cycle'], 1 / 4)
@@ -72,11 +79,19 @@ define(['character', 'util'],
       this.addChild(this.head)
     }
 
+    transitionTo(newStage) {
+      this.music.stop()
+      this.atmo.stop()
+      super.transitionTo(newStage)
+    }
+
     beforeShow(previousStage) {
       this.head.show()
       this.player.sizeMultiplier = 2
       this.player.x = 290
       this.player.y = 120
+      this.music.play()
+      this.atmo.play()
     }
 
     scene1() {
@@ -116,6 +131,15 @@ define(['character', 'util'],
   class BardStage extends Stage {
     constructor(player) {
       super('background-bard', player)
+
+      this.music = PIXI.loader.resources['music-bard-screen'].sound
+      this.music.loop = true
+      this.music.volume = 0.2
+      this.atmo = PIXI.loader.resources['atmo-bard-screen'].sound
+      this.atmo.loop = true
+      this.atmo.volume = 0.2
+
+      this.playMusic = false
 
       this.toHeadArrow = util.createAnimation(PIXI.loader.resources['arrow'], 1 / 8)
       this.toHeadArrow.x = 26
@@ -237,6 +261,8 @@ define(['character', 'util'],
                               this.player.state = 'idle'
                               this.cat.clickable = true
                               this.toHeadArrow.visible = true
+                              this.playMusic = true
+                              this.music.play()
                               this.cat.once('pointerdown', () => {
                                 this.cat.clickable = false
                                 this.player.state = 'talking'
@@ -294,6 +320,12 @@ define(['character', 'util'],
       this.addChild(this.cat)
     }
 
+    transitionTo(newStage) {
+      this.music.stop()
+      this.atmo.stop()
+      super.transitionTo(newStage)
+    }
+
     beforeShow(previousStage) {
       this.goose.sizeMultiplier = 3
       this.bardBody.sizeMultiplier = 3
@@ -306,6 +338,10 @@ define(['character', 'util'],
       this.player.x = 340
       this.player.y = 120
       this.player.sizeMultiplier = 3
+      this.atmo.play()
+      if (this.playMusic) {
+        this.music.play()
+      }
     }
   }
 
