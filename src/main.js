@@ -24,8 +24,6 @@ require(['assets'],
 
       function initRenderer() {
         const app = new Application(384, 216, { backgroundColor: 0x000000 })
-        app.view.style.position = 'absolute'
-        app.view.style.display = 'block'
         // app.autoresize = true
         // app.renderer.resize(window.innerWidth, window.innerHeight)
 
