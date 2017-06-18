@@ -44,6 +44,18 @@ const utils = {
       soundPlayed && soundPlayed()
       utils.playRandomSound(sounds, nextCount, soundPlayed, playbackDone, nextSound)
     })
+  },
+  wait(seconds, done) {
+    let t = 0
+    let max_t = seconds * PIXI.ticker.shared.FPS
+    function sleep(deltaT) {
+      t += deltaT
+      if (t >= max_t) {
+        PIXI.ticker.shared.remove(sleep)
+        return done()
+      }
+    }
+    PIXI.ticker.shared.add(sleep)
   }
 }
 
