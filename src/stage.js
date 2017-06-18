@@ -54,14 +54,15 @@ define(['character', 'util'],
     constructor(player) {
       super('background-head', player)
 
-      // const nextStage = new PIXI.Sprite(PIXI.loader.resources['placeholder-1'].texture)
-      // nextStage.scale = new PIXI.Point(.25, .25)
-      // nextStage.interactive = true
-      // nextStage.buttonMode = true
-      // nextStage.on('pointerdown', () => {
-      //   this.transitionTo(this.stages.bard)
-      // })
-      // this.addChild(nextStage)
+      this.toBardArrow = util.createAnimation(PIXI.loader.resources['arrow'], 1 / 8)
+      this.toBardArrow.x = 300
+      this.toBardArrow.y = 95
+      this.toBardArrow.interactive = true
+      this.toBardArrow.buttonMode = true
+      this.toBardArrow.on('pointerdown', () => {
+        this.transitionTo(this.stages.bard)
+      })
+      this.addChild(this.toBardArrow)
 
       this.head = new Character({
         idle: util.createAnimation([PIXI.loader.resources['hellmouth-talk-cycle'][0]], 1 / 32),
@@ -249,7 +250,7 @@ define(['character', 'util'],
                       //       this.player.talk('sssslsssls')
                       //       this.player.say('Ich sehe das Problem.\nVielleicht kann ich helfen.', 8, () => {
                               this.player.talk('sssllss')
-                              this.player.say('Husch, Husch Katze. Lass die beiden in Ruhe!', 6, () => {
+                              this.player.say('Husch, Husch Katze.\nLass die beiden in Ruhe!', 6, () => {
                                 this.player.state = 'idle'
                                 this.cat.state = 'speaking'
                                 this.cat.say('[genervtes Miauen]', 4, () => {
@@ -258,9 +259,9 @@ define(['character', 'util'],
                                   this.player.talk('slssssls')
                                   this.player.say('Das wird wohl schwieriger als gedacht…', 6, () => {
                                     this.player.state = 'idle'
-                            //     })
-                            //   })
-                            // })
+                                  })
+                                }, 0, -30)
+                              })
               //             })
               //           })
               //         })
@@ -288,10 +289,10 @@ define(['character', 'util'],
               //     })
               //   })
               // })
-            })
-          })
+          //   })
+          // })
 
-        })
+        // })
       })
 
 
