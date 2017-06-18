@@ -69,11 +69,6 @@ define(['character', 'util'],
         speaking: util.createAnimation(PIXI.loader.resources['hellmouth-talk-cycle'], 1 / 4)
       }, 135, 40)
 
-      // this.head.clickable = true
-      // this.head.on('pointerdown', () => {
-      //   this.head.state = this.head.state == 'idle' ? 'speaking' : 'idle'
-      // })
-
       this.addChild(this.head)
     }
 
@@ -90,24 +85,31 @@ define(['character', 'util'],
         return res.sound
       })
 
-      // this.head.state = 'speaking'
-      // let done = false
-      // util.playRandomSound(sounds, () => !done)
-      // this.head.say('Um Gottes Willen...', 4, () => {
-      //   this.head.say('Es toben ganz schön viele\ndieser Dämonen herum!!', 8, () => {
-      //     this.head.say('Wenn du irgendwelche Fragen hast,\nkannst du dich jederzeit an mich wenden!', 8, () => {
-      //       this.head.say('Du schaffst das, Antonius!', 4, () => {
-      //         this.head.say('Wenn nicht du, wer dann?', 4, () => {
-      //           this.head.say('Nun geh und leg los...', 6, () => {
-      //             done = true
-      //             this.transitionTo(this.stages.bard)
-      //           })
-      //         })
-      //       })
-      //     })
-      //   })
-      // })
-      this.transitionTo(this.stages.bard)
+      this.toBardArrow.visible = false
+      this.head.clickable = true
+      this.head.state = 'idle'
+
+      this.head.once('pointerdown', () => {
+        this.head.clickable = false
+        this.head.state = 'speaking'
+        let done = false
+        util.playRandomSound(sounds, () => !done)
+        this.head.say('Um Gottes Willen...', 4, () => {
+          this.head.say('Es toben ganz schön viele\ndieser Dämonen herum!!', 8, () => {
+            this.head.say('Wenn du irgendwelche Fragen hast,\nkannst du dich jederzeit an mich wenden!', 8, () => {
+              this.head.say('Du schaffst das, Antonius!', 4, () => {
+                this.head.say('Wenn nicht du, wer dann?', 4, () => {
+                  this.head.say('Nun geh und leg los...', 6, () => {
+                    done = true
+                    this.head.state = 'idle'
+                    this.toBardArrow.visible = true
+                  }, 64)
+                }, 64)
+              }, 64)
+            }, 64)
+          }, 64)
+        }, 64)
+      })
     }
   }
 
@@ -126,15 +128,6 @@ define(['character', 'util'],
       })
       this.addChild(this.toHeadArrow)
 
-      // const nextStage = new PIXI.Sprite(PIXI.loader.resources['placeholder-1'].texture)
-      // nextStage.scale = new PIXI.Point(.25, .25)
-      // nextStage.interactive = true
-      // nextStage.buttonMode = true
-      // nextStage.on('pointerdown', () => {
-      //   this.transitionTo(this.stages.head)
-      // })
-      // this.addChild(nextStage)
-
       const gooseSounds = util.range(1, 15).map(i => {
         const res = PIXI.loader.resources[`gans-${util.intToString(i, 3)}`]
         return res.sound
@@ -150,10 +143,6 @@ define(['character', 'util'],
         }
       })
       this.goose.clickable = true
-      // this.goose.on('pointerdown', () => {
-      //   this.player.state = 'walking'
-      //   this.player.moveTo(200, 110, 40, () => { this.player.state = 'idle'; this.goose.state = 'speaking' })
-      // })
       this.goose.animations.speaking.loop = true
       this.goose.state = 'idle'
 
@@ -185,11 +174,6 @@ define(['character', 'util'],
         }
       })
 
-      // this.cat = new Character({
-      //   idle: util.createAnimation([PIXI.loader.resources['cat-idle-cycle']], 1 / 8)
-      // }, 145, 10)
-      // this.cat.state = 'idle'
-
       const bardSamples = [
         util.range(1, 7).map(i => PIXI.loader.resources[`bard-do-${util.intToString(i, 3)}`].sound),
         util.range(1, 7).map(i => PIXI.loader.resources[`bard-re-${util.intToString(i, 3)}`].sound),
@@ -211,64 +195,73 @@ define(['character', 'util'],
         playNext()
       }
 
+      this.toHeadArrow.visible = false
       this.goose.once('pointerdown', () => {
-        // this.goose.clickable = false
-        // this.bardHead.state = 'talking'
-        // this.bardBody.state = 'singing'
-        // PIXI.loader.resources['bard-song'].sound.play(() => {
-        //   this.bardHead.state = 'idle'
-        //   this.bardBody.state = 'idle'
-        //   this.goose.state = 'speaking'
-        //   this.goose.say('Ach du meine Güte. Wie theatralisch!', 3, () => {
-        //     this.goose.state = 'idle'
-        //     this.player.state = 'walking'
-        //     this.player.moveTo(250, 100, 40, () => {
-        //       this.player.state = 'talking'
-        //       this.player.talk('ssssssllsll')
-        //       this.player.say('Ihr da, auf dem fantastischen Reitwesen!', 8, () => {
-        //         this.player.talk('sslsssllslssllsll')
-        //         this.player.say('Dieses Lied klingt so unendlich einsam,\nwarum seid Ihr so traurig?', 12, () => {
-        //           this.player.state = 'idle'
-        //           this.bardHead.state = 'talking'
-        //           bardTalk(12)
-        //           this.bardHead.say('Hört mir denn keiner zu?\nIch vermisse meine Freundin, die Reitgans, sehr!', 8, () => {
-        //             this.bardHead.state = 'idle'
-        //             this.goose.state = 'speaking'
-        //             this.goose.say('Soweit sind wir ja nicht voneinander entfernt…', 4, () => {
-                      // this.goose.state = 'idle'
-                      // this.player.state = 'talking'
-                      // this.player.talk('sslsssllslssll')
-                      // this.player.say('Stimmt, soweit seid ihr doch\nnicht voneinander entfernt.', 10, () => {
-                      //   this.player.talk('ssssss')
-                      //   this.player.say('Dreh dich doch mal um. ', 3, () => {
-                      //     this.player.state = 'idle'
-                      //     this.bardHead.state = 'talking'
-                      //     bardTalk(8)
-                      //     this.bardHead.say('Das geht nicht. Da ist etwas hinter mir!', 6, () => {
-                      //       this.bardHead.state = 'idle'
-                      //       this.player.state = 'talking'
-                      //       this.player.talk('sssslsssls')
-                      //       this.player.say('Ich sehe das Problem.\nVielleicht kann ich helfen.', 8, () => {
-                              this.player.talk('sssllss')
-                              this.player.say('Husch, Husch Katze.\nLass die beiden in Ruhe!', 6, () => {
-                                this.player.state = 'idle'
-                                this.cat.state = 'speaking'
-                                this.cat.say('[genervtes Miauen]', 4, () => {
-                                  this.cat.state = 'idle'
-                                  this.player.state = 'talking'
-                                  this.player.talk('slssssls')
-                                  this.player.say('Das wird wohl schwieriger als gedacht…', 6, () => {
-                                    this.player.state = 'idle'
-                                  })
-                                }, 0, -30)
+        this.goose.clickable = false
+        this.bardHead.state = 'talking'
+        this.bardBody.state = 'singing'
+        PIXI.loader.resources['bard-song'].sound.play(() => {
+          this.bardHead.state = 'idle'
+          this.bardBody.state = 'idle'
+          this.goose.state = 'speaking'
+          this.goose.say('Ach du meine Güte. Wie theatralisch!', 3, () => {
+            this.goose.state = 'idle'
+            this.player.state = 'walking'
+            this.player.moveTo(250, 100, 40, () => {
+              this.player.state = 'talking'
+              this.player.talk('ssssssllsll')
+              this.player.say('Ihr da, auf dem fantastischen Reitwesen!', 8, () => {
+                this.player.talk('sslsssllslssllsll')
+                this.player.say('Dieses Lied klingt so unendlich einsam,\nwarum seid Ihr so traurig?', 12, () => {
+                  this.player.state = 'idle'
+                  this.bardHead.state = 'talking'
+                  bardTalk(12)
+                  this.bardHead.say('Hört mir denn keiner zu?\nIch vermisse meine Freundin,\ndie Reitgans, sehr!', 8, () => {
+                    this.bardHead.state = 'idle'
+                    this.goose.state = 'speaking'
+                    this.goose.say('So weit sind wir ja nicht voneinander entfernt…', 4, () => {
+                      this.goose.state = 'idle'
+                      this.player.state = 'talking'
+                      this.player.talk('sslsssllslssll')
+                      this.player.say('Stimmt, soweit seid ihr doch\nnicht voneinander entfernt.', 10, () => {
+                        this.player.talk('ssssss')
+                        this.player.say('Dreh dich doch mal um. ', 3, () => {
+                          this.player.state = 'idle'
+                          this.bardHead.state = 'talking'
+                          bardTalk(8)
+                          this.bardHead.say('Das geht nicht. Da ist etwas hinter mir!', 6, () => {
+                            this.bardHead.state = 'idle'
+                            this.player.state = 'talking'
+                            this.player.talk('sssslsssls')
+                            this.player.say('Ich sehe das Problem.\nVielleicht kann ich helfen.', 8, () => {
+                              this.player.state = 'idle'
+                              this.cat.clickable = true
+                              this.toHeadArrow.visible = true
+                              this.cat.once('pointerdown', () => {
+                                this.cat.clickable = false
+                                this.player.state = 'talking'
+                                this.player.talk('sssllss')
+                                this.player.say('Husch, Husch Katze.\nLass die beiden in Ruhe!', 6, () => {
+                                  this.player.state = 'idle'
+                                  this.cat.state = 'speaking'
+                                  this.cat.say('[genervtes Miauen]', 4, () => {
+                                    this.cat.state = 'idle'
+                                    this.player.state = 'talking'
+                                    this.player.talk('slssssls')
+                                    this.player.say('Das wird wohl schwieriger als gedacht…', 6, () => {
+                                      this.player.state = 'idle'
+                                    })
+                                  }, 0, -30)
+                                })
                               })
-              //             })
-              //           })
-              //         })
-              //       })
-              //     })
-              //   })
-              // })
+                            })
+                          }, -20, -27)
+                        })
+                      })
+                    }, 50, -45)
+                  }, -20, -27)
+                })
+              })
               // this.player.talk('sssllssslss', () => {
               //   this.player.state = 'idle'
               //   this.bardHead.state = 'talking'
@@ -289,10 +282,9 @@ define(['character', 'util'],
               //     })
               //   })
               // })
-          //   })
-          // })
-
-        // })
+            })
+          }, 50, -45)
+        })
       })
 
 
