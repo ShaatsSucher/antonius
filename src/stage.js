@@ -121,16 +121,19 @@ define(['character', 'util'],
       this.goose.state = 'idle'
 
       this.bardHead = new Character({
-        idle: util.createAnimation([PIXI.loader.resources['placeholder-2'].texture], 1 / 8),
-        talking: util.createAnimation([PIXI.loader.resources['placeholder-3'].texture], 1 / 8)
-      }, 142, 55)
-      this.bardHead.sizeMultiplier = 0.2
+        idle: util.createAnimation([PIXI.loader.resources['bard-talk-cycle'][0]], 1 / 8),
+        talking: util.createAnimation(PIXI.loader.resources['bard-talk-cycle'], 1 / 8)
+      }, 145, 10)
 
       this.bardBody = new Character({
-        idle: util.createAnimation([PIXI.loader.resources['placeholder-2'].texture], 1 / 8),
-        singing: util.createAnimation([PIXI.loader.resources['placeholder-3'].texture], 1 / 8)
-      }, 142, 85)
-      this.bardBody.sizeMultiplier = 0.2
+        idle: util.createAnimation([PIXI.loader.resources['bard-play-cycle'][0]], 1 / 8),
+        singing: util.createAnimation(PIXI.loader.resources['bard-play-cycle'], 1 / 8)
+      }, 145, 10)
+
+      // this.bardBody = new Character({
+      //   idle: util.createAnimation([PIXI.loader.resources['placeholder-2'].texture], 1 / 8),
+      //   singing: util.createAnimation([PIXI.loader.resources['placeholder-3'].texture], 1 / 8)
+      // }, 142, 55)
 
       const bardSamples = [
         util.range(1, 7).map(i => PIXI.loader.resources[`bard-do-${util.intToString(i, 3)}`].sound),
@@ -203,15 +206,17 @@ define(['character', 'util'],
 
 
       this.addChild(this.goose)
-      this.addChild(this.bardHead)
       this.addChild(this.bardBody)
+      this.addChild(this.bardHead)
     }
 
     beforeShow(previousStage) {
       this.goose.sizeMultiplier = 3
+      this.bardBody.sizeMultiplier = 3
+      this.bardHead.sizeMultiplier = 3
       this.goose.show()
-      this.bardHead.show()
       this.bardBody.show()
+      this.bardHead.show()
       this.player.x = 340
       this.player.y = 120
       this.player.sizeMultiplier = 3

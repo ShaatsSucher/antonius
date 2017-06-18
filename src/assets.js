@@ -13,6 +13,8 @@ define(['util'], (util) => {
       { name: 'antonius-talk-cycle-sprites', url: 'img/antonius-talkcycle.png'},
       { name: 'hellmouth-talk-cycle-sprites', url: 'img/hellmouth-talkcycle.png'},
       { name: 'goose-talk-cycle-sprites', url: 'img/goose-talkcycle.png'},
+      { name: 'bard-talk-cycle-sprites', url: 'img/bard-talkcycle.png'},
+      { name: 'bard-play-cycle-sprites', url: 'img/bard-playcycle.png'},
       { name: 'background-head', url: 'img/background-head.png' },
       { name: 'background-bard', url: 'img/background-bard.png' },
       { name: 'bard-song', url: 'aud/bard/Song.ogg' }
@@ -56,6 +58,8 @@ define(['util'], (util) => {
       PIXI.loader.resources['talk-cycle'] = loadAnimation('antonius-talk-cycle-sprites', 32, 32)
       PIXI.loader.resources['hellmouth-talk-cycle'] = loadAnimation('hellmouth-talk-cycle-sprites', 128, 128)
       PIXI.loader.resources['goose-talk-cycle'] = loadAnimation('goose-talk-cycle-sprites', 64, 64)
+      PIXI.loader.resources['bard-talk-cycle'] = loadAnimation('bard-talk-cycle-sprites', 64, 64)
+      PIXI.loader.resources['bard-play-cycle'] = loadAnimation('bard-play-cycle-sprites', 64, 64)
 
       console.log('loading done')
       loadingDone()
