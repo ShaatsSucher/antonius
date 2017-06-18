@@ -13,13 +13,19 @@ define(['util'], (util) => {
       { name: 'antonius-talk-cycle-sprites', url: 'img/antonius-talkcycle.png'},
       { name: 'hellmouth-talk-cycle-sprites', url: 'img/hellmouth-talkcycle.png'},
       { name: 'goose-talk-cycle-sprites', url: 'img/goose-talkcycle.png'},
+      { name: 'goose-walk-cycle-sprites', url: 'img/goose-walkcycle.png'},
+      { name: 'bard-walk-cycle-sprites', url: 'img/bard-walkcycle.png'},
       { name: 'bard-talk-cycle-sprites', url: 'img/bard-talkcycle.png'},
       { name: 'bard-play-cycle-sprites', url: 'img/bard-playcycle.png'},
+      { name: 'cat-idle-cycle-sprites', url: 'img/cat-idlecycle.png'},
+      { name: 'cat-walk-cycle-sprites', url: 'img/cat-walkcycle.png'},
       { name: 'background-head', url: 'img/background-head.png' },
       { name: 'background-bard', url: 'img/background-bard.png' },
+      { name: 'fish', url: 'img/fish.png' },
       { name: 'bard-song', url: 'aud/bard/Song.ogg' }
     ]
 
+    util.range(1, 4).forEach(i => loadStuff.push({ name: `cat-${util.intToString(i, 3)}`, url: `aud/cat/cat denial-${util.intToString(i, 3)}.wav`}))
     util.range(1, 15).forEach(i => loadStuff.push({ name: `gans-${util.intToString(i, 3)}`, url: `aud/Gans-${util.intToString(i, 3)}.wav`}))
     util.range(1, 39).forEach(i => loadStuff.push({ name: `hellmouth-${util.intToString(i, 3)}`, url: `aud/craesbeeck/hellmouth-${util.intToString(i, 2)}.wav`}))
     util.range(1, 101).forEach(i => loadStuff.push({ name: `antonius-short-${util.intToString(i, 3)}`, url: `aud/antonius/kurz/Antonius kurz-${util.intToString(i, 3)}.wav`}))
@@ -58,8 +64,12 @@ define(['util'], (util) => {
       PIXI.loader.resources['talk-cycle'] = loadAnimation('antonius-talk-cycle-sprites', 32, 32)
       PIXI.loader.resources['hellmouth-talk-cycle'] = loadAnimation('hellmouth-talk-cycle-sprites', 128, 128)
       PIXI.loader.resources['goose-talk-cycle'] = loadAnimation('goose-talk-cycle-sprites', 64, 64)
+      PIXI.loader.resources['goose-walk-cycle'] = loadAnimation('goose-walk-cycle-sprites', 64, 64)
       PIXI.loader.resources['bard-talk-cycle'] = loadAnimation('bard-talk-cycle-sprites', 64, 64)
+      PIXI.loader.resources['bard-walk-cycle'] = loadAnimation('bard-walk-cycle-sprites', 64, 64)
       PIXI.loader.resources['bard-play-cycle'] = loadAnimation('bard-play-cycle-sprites', 64, 64)
+      PIXI.loader.resources['cat-idle-cycle'] = loadAnimation('cat-idle-cycle-sprites', 64, 64)
+      PIXI.loader.resources['cat-walk-cycle'] = loadAnimation('cat-walk-cycle-sprites', 16, 16)
 
       console.log('loading done')
       loadingDone()
