@@ -151,6 +151,7 @@ define(['character', 'util'],
                 // self.head.say('Ein Hinweis?', 3, () => {
                   done = true
                   self.head.state = 'idle'
+                  self.head.clickable = true
                   self.toBardArrow.visible = true
                   self.head.once('pointerdown', helpText)
                 // }, 64)
